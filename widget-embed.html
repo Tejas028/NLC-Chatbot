@@ -1,0 +1,145 @@
+<!-- 
+    NIRMA UNIVERSITY CHATBOT WIDGET
+    Add this code snippet to ANY page on www.nirmauni.ac.in
+    Place it just before the closing </body> tag
+-->
+
+<!-- Widget Styles -->
+<style>
+    #nirma-chat-button{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border:none;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;transition:transform .3s,box-shadow .3s;z-index:9999}#nirma-chat-button:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.25)}#nirma-chat-button svg{width:28px;height:28px;fill:#fff}#nirma-chat-widget{position:fixed;bottom:90px;right:20px;width:380px;height:600px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden;z-index:9998;animation:slideUp .3s ease-out}@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}#nirma-chat-header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:20px;display:flex;justify-content:space-between;align-items:center}#nirma-chat-header h3{font-size:18px;font-weight:600;margin:0}#nirma-chat-header p{font-size:12px;opacity:.9;margin:4px 0 0}#nirma-close-btn{background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s}#nirma-close-btn:hover{background:rgba(255,255,255,.3)}#nirma-chat-messages{flex:1;overflow-y:auto;padding:20px;background:#f8f9fa}.nirma-message{margin-bottom:16px;display:flex;animation:messageAppear .3s ease-out}@keyframes messageAppear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.nirma-message.bot{justify-content:flex-start}.nirma-message.user{justify-content:flex-end}.nirma-message-content{max-width:80%;padding:12px 16px;border-radius:12px;line-height:1.5;font-size:14px}.nirma-message.bot .nirma-message-content{background:#fff;color:#333;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.1)}.nirma-message.user .nirma-message-content{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-bottom-right-radius:4px}.nirma-typing{display:none;padding:12px 16px;background:#fff;border-radius:12px;border-bottom-left-radius:4px;width:fit-content}.nirma-typing span{display:inline-block;width:8px;height:8px;background:#999;border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}.nirma-typing span:nth-child(2){animation-delay:.2s}.nirma-typing span:nth-child(3){animation-delay:.4s}@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}}#nirma-chat-input-container{padding:16px;background:#fff;border-top:1px solid #e0e0e0;display:flex;gap:8px}#nirma-chat-input{flex:1;padding:12px 16px;border:1px solid #e0e0e0;border-radius:24px;font-size:14px;outline:0;transition:border-color .2s}#nirma-chat-input:focus{border-color:#667eea}#nirma-send-btn{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s}#nirma-send-btn:hover{transform:scale(1.05)}#nirma-send-btn:disabled{opacity:.5;cursor:not-allowed}#nirma-send-btn svg{width:20px;height:20px;fill:#fff}.nirma-quick-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.nirma-quick-btn{padding:8px 12px;background:#fff;border:1px solid #667eea;color:#667eea;border-radius:16px;font-size:12px;cursor:pointer;transition:all .2s}.nirma-quick-btn:hover{background:#667eea;color:#fff}@media (max-width:480px){#nirma-chat-widget{width:calc(100vw - 20px);height:calc(100vh - 100px);right:10px}}
+</style>
+
+<!-- Widget HTML -->
+<button id="nirma-chat-button" aria-label="Open chat">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+</button>
+
+<div id="nirma-chat-widget">
+    <div id="nirma-chat-header">
+        <div>
+            <h3>Nirma Assistant</h3>
+            <p>Ask me anything</p>
+        </div>
+        <button id="nirma-close-btn">×</button>
+    </div>
+    <div id="nirma-chat-messages">
+        <div class="nirma-message bot">
+            <div class="nirma-message-content">
+                Hi! 👋 I'm your Nirma University assistant. How can I help you?
+                <div class="nirma-quick-actions">
+                    <button class="nirma-quick-btn" data-q="What are the admission requirements?">Admissions</button>
+                    <button class="nirma-quick-btn" data-q="Tell me about courses">Courses</button>
+                    <button class="nirma-quick-btn" data-q="Campus facilities?">Campus</button>
+                    <button class="nirma-quick-btn" data-q="Placement information">Placements</button>
+                </div>
+            </div>
+        </div>
+        <div class="nirma-typing"><span></span><span></span><span></span></div>
+    </div>
+    <div id="nirma-chat-input-container">
+        <input type="text" id="nirma-chat-input" placeholder="Type your message..." autocomplete="off"/>
+        <button id="nirma-send-btn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+</div>
+
+<!-- Widget JavaScript -->
+<script>
+(function() {
+    // CONFIGURATION - Update this URL to your deployed API
+    const API_URL = 'https://your-server.com/chat'; // ← CHANGE THIS
+    
+    const btn = document.getElementById('nirma-chat-button');
+    const widget = document.getElementById('nirma-chat-widget');
+    const closeBtn = document.getElementById('nirma-close-btn');
+    const messages = document.getElementById('nirma-chat-messages');
+    const input = document.getElementById('nirma-chat-input');
+    const sendBtn = document.getElementById('nirma-send-btn');
+    const typing = document.querySelector('.nirma-typing');
+    
+    let isOpen = false;
+    
+    function toggle() {
+        isOpen = !isOpen;
+        widget.style.display = isOpen ? 'flex' : 'none';
+        if (isOpen) {
+            input.focus();
+            messages.scrollTop = messages.scrollHeight;
+        }
+    }
+    
+    function addMsg(text, isUser) {
+        const div = document.createElement('div');
+        div.className = `nirma-message ${isUser ? 'user' : 'bot'}`;
+        const content = document.createElement('div');
+        content.className = 'nirma-message-content';
+        content.textContent = text;
+        div.appendChild(content);
+        messages.insertBefore(div, typing);
+        messages.scrollTop = messages.scrollHeight;
+    }
+    
+    function showTyping(show) {
+        typing.style.display = show ? 'block' : 'none';
+        if (show) messages.scrollTop = messages.scrollHeight;
+    }
+    
+    async function send(msg) {
+        if (!msg.trim()) return;
+        addMsg(msg, true);
+        input.value = '';
+        sendBtn.disabled = true;
+        showTyping(true);
+        
+        try {
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: msg})
+            });
+            
+            if (!res.ok) throw new Error('Network error');
+            
+            const data = await res.json();
+            showTyping(false);
+            addMsg(data.response);
+        } catch (err) {
+            console.error(err);
+            showTyping(false);
+            addMsg('Sorry, something went wrong. Please try again or contact admissions@nirmauni.ac.in');
+        } finally {
+            sendBtn.disabled = false;
+            input.focus();
+        }
+    }
+    
+    btn.addEventListener('click', toggle);
+    closeBtn.addEventListener('click', toggle);
+    sendBtn.addEventListener('click', () => send(input.value));
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') send(input.value);
+    });
+    
+    document.addEventListener('click', e => {
+        if (e.target.classList.contains('nirma-quick-btn')) {
+            send(e.target.getAttribute('data-q'));
+        }
+    });
+    
+    input.addEventListener('input', () => {
+        sendBtn.disabled = !input.value.trim();
+    });
+    
+    console.log('🤖 Nirma Chatbot Widget Loaded');
+})();
+</script>
+
+<!-- 
+    INSTALLATION INSTRUCTIONS:
+    
+    1. Copy this entire code block
+    2. Paste it before the closing </body> tag on any page
+    3. Update the API_URL variable (line 7) to point to your deployed backend
+    4. Save and refresh the page
+    
+    For help: See README.md or contact your development team
+-->
